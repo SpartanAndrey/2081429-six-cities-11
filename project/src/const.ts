@@ -9,4 +9,6 @@ export enum AuthorizationStatus {
     Auth = 'AUTH',
     NoAuth = 'NO_AUTH',
     Unknown = 'UNKNOWN',
-  }
+}
+
+export const RATING_COEF = 20;
