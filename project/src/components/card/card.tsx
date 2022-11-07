@@ -1,5 +1,4 @@
-import {AppRoute} from '../../const';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MouseEventHandler } from 'react';
 import { Offer } from '../../types/offers';
 import { RATING_COEF } from '../../const';
@@ -10,13 +9,14 @@ type cardProps ={
   onHoverAway: MouseEventHandler<HTMLElement>;
 };
 
-
 function Card({offer, onHoverOn, onHoverAway}: cardProps): JSX.Element {
 
   const {id, previewImage, isPremium, price, title, type, rating, isFavorite} = offer;
 
+  const currentPath = useLocation().pathname;
+
   return (
-    <article className="cities__card place-card"
+    <article className={`${currentPath === '/favorites' ? 'favorites__card' : 'cities__card'} place-card`}
       onMouseEnter={onHoverOn}
       onMouseLeave={onHoverAway}
     >
@@ -24,12 +24,12 @@ function Card({offer, onHoverOn, onHoverAway}: cardProps): JSX.Element {
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${currentPath === '/favorites' ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}>
         <a href="#todo">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Something should be here"/>
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${currentPath === '/favorites' ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -49,9 +49,9 @@ function Card({offer, onHoverOn, onHoverAway}: cardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
+          <Link to={`/offers/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type[0].toUpperCase() + type.slice(1)}</p>
+        <p className="place-card__type" defaultValue='Apartment'>{type[0].toUpperCase() + type.slice(1)}</p>
       </div>
     </article>
   );
