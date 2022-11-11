@@ -9,7 +9,7 @@ type propertyPageProps = {
   offers: Offer[];
 }
 
-function PropertyPage({offers}: propertyPageProps): JSX.Element {
+function PropertyPage({offers = []}: propertyPageProps): JSX.Element {
 
   const params = useParams();
 

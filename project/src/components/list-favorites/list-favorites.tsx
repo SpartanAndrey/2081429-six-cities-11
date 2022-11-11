@@ -1,16 +1,22 @@
 import Card from '../card/card';
 import { Offer } from '../../types/offers';
-import { useState } from 'react';
 
 type ListFavoritesProps = {
     offers: Offer[];
+    onListOfferHoverOn: (id: number | undefined) => void;
 }
 
-function ListFavorites({offers}: ListFavoritesProps): JSX.Element {
+function ListFavorites({offers = [], onListOfferHoverOn}: ListFavoritesProps): JSX.Element {
 
   const cities = [...new Set(offers.map(({city}) => city.name))];
 
-  const [, setActiveCard] = useState(0);
+  function handleHoverOn(id: number | undefined) {
+    onListOfferHoverOn(id);
+  }
+
+  function handleHoverAway() {
+    onListOfferHoverOn(0);
+  }
 
   return (
     <ul className="favorites__list">
@@ -28,8 +34,8 @@ function ListFavorites({offers}: ListFavoritesProps): JSX.Element {
               <Card
                 key={offer.id}
                 offer={offer}
-                onHoverOn={() => setActiveCard(offer.id)}
-                onHoverAway={() => setActiveCard(0)}
+                onOfferHoverOn={handleHoverOn}
+                onOfferHoverAway={handleHoverAway}
               /> : '')}
           </div>
         </li>)
