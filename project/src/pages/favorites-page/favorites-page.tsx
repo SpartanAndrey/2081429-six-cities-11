@@ -2,6 +2,7 @@ import Account from '../../components/account/account';
 import ListFavorites from '../../components/list-favorites/list-favorites';
 import Logo from '../../components/logo/logo';
 import { Offer } from '../../types/offers';
+import { useState } from 'react';
 
 type FavoritesPageProps = {
   offers: Offer[];
@@ -10,6 +11,14 @@ type FavoritesPageProps = {
 function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
 
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+
+  const [, setSelectedOffer] = useState<Offer | undefined>(undefined);
+
+  const onListOfferHoverOn = (offerId: number | undefined) => {
+    const currentOffer = offers.find((offer) => offer.id === offerId);
+
+    setSelectedOffer(currentOffer);
+  };
 
   return (
     <div className="page">
@@ -26,7 +35,7 @@ function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ListFavorites offers={favoriteOffers}/>
+            <ListFavorites offers={favoriteOffers} onListOfferHoverOn={onListOfferHoverOn}/>
           </section>
         </div>
       </main>

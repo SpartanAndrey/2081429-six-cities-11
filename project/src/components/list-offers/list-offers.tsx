@@ -1,14 +1,16 @@
 import Card from '../card/card';
 import { Offer } from '../../types/offers';
-import { useState } from 'react';
 
 type ListOffersProps = {
     offers: Offer[];
+    onListOfferHoverOn: (id: number | undefined) => void;
 }
 
-function ListOffers({offers}: ListOffersProps): JSX.Element {
+function ListOffers({offers = [], onListOfferHoverOn}: ListOffersProps): JSX.Element {
 
-  const [, setActiveCard] = useState(0);
+  const handleHoverOn = (id: number | undefined) => {
+    onListOfferHoverOn(id);
+  };
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -16,8 +18,7 @@ function ListOffers({offers}: ListOffersProps): JSX.Element {
         <Card
           key={offer.id}
           offer={offer}
-          onHoverOn={() => setActiveCard(offer.id)}
-          onHoverAway={() => setActiveCard(0)}
+          onOfferHoverOn={handleHoverOn}
         />)
       )}
     </div>

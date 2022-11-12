@@ -2,6 +2,8 @@ import Account from '../../components/account/account';
 import Logo from '../../components/logo/logo';
 import ListOffers from '../../components/list-offers/list-offers';
 import { Offer } from '../../types/offers';
+import { useState } from 'react';
+import Map from '../../components/map/map';
 
 type MainPageProps = {
     placesCount: number;
@@ -9,6 +11,14 @@ type MainPageProps = {
 }
 
 function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+
+  const onListOfferHoverOn = (offerId: number | undefined) => {
+    const currentOffer = offers.find((offer) => offer.id === offerId);
+
+    setSelectedOffer(currentOffer);
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -79,11 +89,11 @@ function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <ListOffers
-                offers={offers}
+                offers={offers} onListOfferHoverOn={onListOfferHoverOn}
               />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map offers={offers} selectedOffer={selectedOffer} />
             </div>
           </div>
         </div>
