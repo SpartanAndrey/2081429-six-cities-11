@@ -10,13 +10,9 @@ function ListFavorites({offers = [], onListOfferHoverOn}: ListFavoritesProps): J
 
   const cities = [...new Set(offers.map(({city}) => city.name))];
 
-  function handleHoverOn(id: number | undefined) {
+  const handleHoverOn = (id: number | undefined) => {
     onListOfferHoverOn(id);
-  }
-
-  function handleHoverAway() {
-    onListOfferHoverOn(0);
-  }
+  };
 
   return (
     <ul className="favorites__list">
@@ -35,7 +31,6 @@ function ListFavorites({offers = [], onListOfferHoverOn}: ListFavoritesProps): J
                 key={offer.id}
                 offer={offer}
                 onOfferHoverOn={handleHoverOn}
-                onOfferHoverAway={handleHoverAway}
               /> : '')}
           </div>
         </li>)

@@ -8,13 +8,9 @@ type ListOffersProps = {
 
 function ListOffers({offers = [], onListOfferHoverOn}: ListOffersProps): JSX.Element {
 
-  function handleHoverOn(id: number | undefined) {
-    onListOfferHoverOn(Number(id));
-  }
-
-  function handleHoverAway() {
-    onListOfferHoverOn(0);
-  }
+  const handleHoverOn = (id: number | undefined) => {
+    onListOfferHoverOn(id);
+  };
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -23,7 +19,6 @@ function ListOffers({offers = [], onListOfferHoverOn}: ListOffersProps): JSX.Ele
           key={offer.id}
           offer={offer}
           onOfferHoverOn={handleHoverOn}
-          onOfferHoverAway={handleHoverAway}
         />)
       )}
     </div>

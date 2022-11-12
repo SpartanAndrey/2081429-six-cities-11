@@ -5,22 +5,21 @@ import { RATING_COEF } from '../../const';
 type cardProps ={
   offer: Offer;
   onOfferHoverOn: (id: number | undefined) => void;
-  onOfferHoverAway: () => void;
 };
 
-function Card({offer, onOfferHoverOn, onOfferHoverAway}: cardProps): JSX.Element {
+function Card({offer, onOfferHoverOn}: cardProps): JSX.Element {
 
   const {id, previewImage, isPremium, price, title, type, rating, isFavorite} = offer;
 
   const currentPath = useLocation().pathname;
 
-  function handleHoverOn() {
+  const handleHoverOn = () => {
     onOfferHoverOn(id);
-  }
+  };
 
-  function handleHoverAway() {
-    onOfferHoverAway();
-  }
+  const handleHoverAway = () => {
+    onOfferHoverOn(undefined);
+  };
 
   return (
     <article className={`${currentPath === '/favorites' ? 'favorites__card' : 'cities__card'} place-card`}
