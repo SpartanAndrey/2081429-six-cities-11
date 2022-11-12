@@ -1,19 +1,22 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import MainPage from '../../pages/main-page/main-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PropertyPage from '../../pages/property-page/property-page';
-import {Offer} from '../../types/offers';
+import { Offer } from '../../types/offers';
+import { Review } from '../../types/reviews';
 
 type AppProps = {
   placesCount: number;
   offers: Offer[];
+  offersNearby: Offer[];
+  reviews: Review[];
 }
 
-function App({placesCount, offers}: AppProps): JSX.Element {
+function App({placesCount, offers, offersNearby, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -45,7 +48,7 @@ function App({placesCount, offers}: AppProps): JSX.Element {
         >
           <Route
             path={AppRoute.Room}
-            element={<PropertyPage offers={offers}/>}
+            element={<PropertyPage offers={offers} offersNearby={offersNearby} reviews={reviews}/>}
           />
         </Route>
         <Route

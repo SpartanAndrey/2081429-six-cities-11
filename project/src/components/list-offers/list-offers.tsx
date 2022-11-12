@@ -13,7 +13,7 @@ function ListOffers({offers = [], onListOfferHoverOn}: ListOffersProps): JSX.Ele
   };
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <>
       {offers.map((offer: Offer) => (
         <Card
           key={offer.id}
@@ -21,7 +21,7 @@ function ListOffers({offers = [], onListOfferHoverOn}: ListOffersProps): JSX.Ele
           onOfferHoverOn={handleHoverOn}
         />)
       )}
-    </div>
+    </>
   );
 }
 
