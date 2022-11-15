@@ -29,7 +29,7 @@ function Map({ offers, selectedOffer}: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      offers.forEach((offer) => {
+      offers && offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.city.location.latitude,
           lng: offer.city.location.longitude,
@@ -46,7 +46,7 @@ function Map({ offers, selectedOffer}: MapProps): JSX.Element {
     }
   }, [map, offers, selectedOffer]);
 
-  return (<section className="cities__map map" style={{height: '100%'}} ref={mapRef}></section>);
+  return (<div style={{height: '100%'}} ref={mapRef}></div>);
 }
 
 export default Map;
