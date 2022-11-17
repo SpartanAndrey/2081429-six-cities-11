@@ -1,9 +1,12 @@
 import Account from '../../components/account/account';
 import Logo from '../../components/logo/logo';
+import ListCities from '../../components/list-cities/list-cities';
 import ListOffers from '../../components/list-offers/list-offers';
 import { Offer } from '../../types/offers';
 import { useState } from 'react';
 import Map from '../../components/map/map';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeCity } from '../../store/action';
 
 type MainPageProps = {
     placesCount: number;
@@ -11,12 +14,23 @@ type MainPageProps = {
 }
 
 function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
+
+  const dispatch = useAppDispatch();
+
+  const selectedCity = useAppSelector((state) => state.city);
+  const allOffers = useAppSelector((state) => state.offersList);
+  const selectedOffers = allOffers.filter(({ city }) => city.name === selectedCity);
+
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const onListOfferHoverOn = (offerId: number | undefined) => {
-    const currentOffer = offers.find((offer) => offer.id === offerId);
+    const currentOffer = selectedOffers.find((offer) => offer.id === offerId);
 
     setSelectedOffer(currentOffer);
+  };
+
+  const onCityClick = (city: string) => {
+    dispatch(changeCity(city));
   };
 
   return (
@@ -34,45 +48,17 @@ function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#todo">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#todo">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#todo">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="#todo">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#todo">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#todo">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <ListCities
+              selectedCity={selectedCity}
+              onCityChange={onCityClick}
+            />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{selectedOffers.length} places to stay in {selectedCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -90,13 +76,13 @@ function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
                 <ListOffers
-                  offers={offers} onListOfferHoverOn={onListOfferHoverOn}
+                  offers={selectedOffers} onListOfferHoverOn={onListOfferHoverOn}
                 />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} selectedOffer={selectedOffer} />
+                <Map offers={selectedOffers} selectedOffer={selectedOffer} />
               </section>
             </div>
           </div>

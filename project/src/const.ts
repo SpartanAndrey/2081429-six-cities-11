@@ -11,6 +11,8 @@ export enum AuthorizationStatus {
     Unknown = 'UNKNOWN',
 }
 
+export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
 export const RATING_COEF = 20;
 
 export const Ratings = [

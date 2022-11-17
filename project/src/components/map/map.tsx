@@ -4,6 +4,7 @@ import useMap from '../../hooks/use-map';
 import { Offer } from '../../types/offers';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../../hooks';
 
 type MapProps = {
     offers: Offer[];
@@ -26,6 +27,7 @@ function Map({ offers, selectedOffer}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
+  const selectedCity = useAppSelector((state) => state.city);
 
   useEffect(() => {
     if (map) {
@@ -44,7 +46,7 @@ function Map({ offers, selectedOffer}: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, selectedOffer, selectedCity]);
 
   return (<div style={{height: '100%'}} ref={mapRef}></div>);
 }
