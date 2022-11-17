@@ -13,6 +13,14 @@ export enum AuthorizationStatus {
 
 export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
+export const defaultCity = {
+  name: 'Paris',
+  location: {
+    latitude: 48.8534,
+    longitude: 2.3488,
+  },
+};
+
 export const RATING_COEF = 20;
 
 export const Ratings = [
