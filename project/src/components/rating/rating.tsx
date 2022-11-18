@@ -1,9 +1,9 @@
 import { ChangeEvent } from 'react';
 
 type RatingProps = {
-    title: string;
-    value: string;
-    fieldChangeHandle: (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  title: string;
+  value: string;
+  fieldChangeHandle: (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 function Rating({title, value, fieldChangeHandle}: RatingProps): JSX.Element {

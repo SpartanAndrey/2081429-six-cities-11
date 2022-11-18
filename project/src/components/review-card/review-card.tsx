@@ -3,7 +3,7 @@ import { RATING_COEF } from '../../const';
 import dayjs from 'dayjs';
 
 type ReviewProps = {
-    review: Review;
+  review: Review;
 };
 
 function ReviewCard({review}: ReviewProps): JSX.Element {
