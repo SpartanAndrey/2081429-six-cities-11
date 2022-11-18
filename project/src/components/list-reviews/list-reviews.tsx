@@ -2,7 +2,7 @@ import { Review } from '../../types/reviews';
 import ReviewCard from '../review-card/review-card';
 
 type ListReviewsProps = {
-    reviews: Review[];
+  reviews: Review[];
 };
 
 function ListReviews({reviews = []}: ListReviewsProps): JSX.Element {

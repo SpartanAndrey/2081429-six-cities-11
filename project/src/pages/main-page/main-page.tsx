@@ -6,7 +6,7 @@ import { Offer } from '../../types/offers';
 import { useState } from 'react';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
+import { setCurrentCity } from '../../store/action';
 
 type MainPageProps = {
     placesCount: number;
@@ -17,7 +17,7 @@ function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const selectedCity = useAppSelector((state) => state.city);
+  const selectedCity = useAppSelector((state) => state.currentCity);
   const allOffers = useAppSelector((state) => state.offersList);
   const selectedOffers = allOffers.filter(({ city }) => city.name === selectedCity);
 
@@ -30,7 +30,7 @@ function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
   };
 
   const onCityClick = (city: string) => {
-    dispatch(changeCity(city));
+    dispatch(setCurrentCity(city));
   };
 
   return (

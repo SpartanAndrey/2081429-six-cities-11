@@ -15,7 +15,7 @@ function useMap(
   : Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
-  const selectedCity = useAppSelector((state) => state.city);
+  const selectedCity = useAppSelector((state) => state.currentCity);
 
   const center: City = offer?.city || defaultCity;
 

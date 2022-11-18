@@ -2,8 +2,8 @@ import Card from '../card/card';
 import { Offer } from '../../types/offers';
 
 type ListFavoritesProps = {
-    offers: Offer[];
-    onListOfferHoverOn: (id: number | undefined) => void;
+  offers: Offer[];
+  onListOfferHoverOn: (id: number | undefined) => void;
 }
 
 function ListFavorites({offers = [], onListOfferHoverOn}: ListFavoritesProps): JSX.Element {

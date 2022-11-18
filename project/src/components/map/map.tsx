@@ -7,9 +7,9 @@ import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
 
 type MapProps = {
-    offers: Offer[];
-    selectedOffer: Offer | undefined;
-  }
+  offers: Offer[];
+  selectedOffer: Offer | undefined;
+}
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -27,7 +27,7 @@ function Map({ offers, selectedOffer}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
-  const selectedCity = useAppSelector((state) => state.city);
+  const selectedCity = useAppSelector((state) => state.currentCity);
 
   useEffect(() => {
     const newLayer: LayerGroup = new LayerGroup();
