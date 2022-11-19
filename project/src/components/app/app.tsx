@@ -23,10 +23,7 @@ function App({placesCount, offers, offersNearby, reviews}: AppProps): JSX.Elemen
         <Route
           path={AppRoute.Main}
           element={
-            <MainPage
-              placesCount = {placesCount}
-              offers = {offers}
-            />
+            <MainPage />
           }
         />
         <Route

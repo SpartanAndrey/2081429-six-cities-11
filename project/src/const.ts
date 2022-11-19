@@ -1,14 +1,21 @@
 export enum AppRoute {
-    Main = '/',
-    Login = '/login',
-    Favorites = '/favorites',
-    Room = '/offers/:id'
+  Main = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Room = '/offers/:id'
 }
 
 export enum AuthorizationStatus {
-    Auth = 'AUTH',
-    NoAuth = 'NO_AUTH',
-    Unknown = 'UNKNOWN',
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
+export enum SortType {
+  Default = 'Popular',
+  PriceUp = 'Price: low to high',
+  PriceDown = 'Price: high to low',
+  Top = 'Top rated first',
 }
 
 export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

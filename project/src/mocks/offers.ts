@@ -42,7 +42,7 @@ export const offers: Offer[] = [
     price: 200,
     title: 'beautiful house on the outskirts of the city',
     type: 'house',
-    rating: 3.9,
+    rating: 4.6,
     isFavorite: true,
     city: {
       name: 'Amsterdam',
@@ -68,6 +68,22 @@ export const offers: Offer[] = [
         longitude: 2.3488,
       },
     }
+  },
+  {
+    id: 9,
+    previewImage: 'img/apartment-small-03.jpg',
+    isPremium: true,
+    price: 450,
+    title: 'all inclusive hotel near the central square',
+    type: 'hotel',
+    rating: 3.5,
+    isFavorite: true,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.3534,
+        longitude: 4.9488,
+      },
+    }
   }
-
 ];
