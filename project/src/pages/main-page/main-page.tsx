@@ -2,24 +2,25 @@ import Account from '../../components/account/account';
 import Logo from '../../components/logo/logo';
 import ListCities from '../../components/list-cities/list-cities';
 import ListOffers from '../../components/list-offers/list-offers';
+import Sorting from '../../components/sorting/sorting';
 import { Offer } from '../../types/offers';
 import { useState } from 'react';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCity } from '../../store/action';
+import { getSortOffers } from '../../utils';
+import { getOffersList, getCurrentCity, getCurrentSortType } from '../../store/selector';
 
-type MainPageProps = {
-    placesCount: number;
-    offers: Offer[];
-}
-
-function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const selectedCity = useAppSelector((state) => state.currentCity);
-  const allOffers = useAppSelector((state) => state.offersList);
-  const selectedOffers = allOffers.filter(({ city }) => city.name === selectedCity);
+  const allOffers = useAppSelector(getOffersList);
+  const currentCity = useAppSelector(getCurrentCity);
+  const currentSortType = useAppSelector(getCurrentSortType);
+
+  const selectedOffers = allOffers.filter(({ city }) => city.name === currentCity);
+  const sortOffers = getSortOffers(currentSortType, selectedOffers);
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
@@ -49,7 +50,7 @@ function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ListCities
-              selectedCity={selectedCity}
+              currentCity={currentCity}
               onCityChange={onCityClick}
             />
           </section>
@@ -58,25 +59,11 @@ function MainPage({placesCount, offers}: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{selectedOffers.length} {selectedOffers.length === 1 ? 'place' : 'places'} to stay in {selectedCity}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
+              <b className="places__found">{selectedOffers.length} {selectedOffers.length === 1 ? 'place' : 'places'} to stay in {currentCity}</b>
+              <Sorting />
               <div className="cities__places-list places__list tabs__content">
                 <ListOffers
-                  offers={selectedOffers} onListOfferHoverOn={onListOfferHoverOn}
+                  offers={sortOffers} onListOfferHoverOn={onListOfferHoverOn}
                 />
               </div>
             </section>

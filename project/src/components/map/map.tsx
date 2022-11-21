@@ -5,6 +5,7 @@ import { Offer } from '../../types/offers';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
+import { getCurrentCity } from '../../store/selector';
 
 type MapProps = {
   offers: Offer[];
@@ -27,7 +28,7 @@ function Map({ offers, selectedOffer}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
-  const selectedCity = useAppSelector((state) => state.currentCity);
+  const currentCity = useAppSelector(getCurrentCity);
 
   useEffect(() => {
     const newLayer: LayerGroup = new LayerGroup();
@@ -54,7 +55,7 @@ function Map({ offers, selectedOffer}: MapProps): JSX.Element {
       map?.removeLayer(newLayer);
     };
 
-  }, [map, offers, selectedOffer, selectedCity]);
+  }, [map, offers, selectedOffer, currentCity]);
 
   return (<div style={{height: '100%'}} ref={mapRef}></div>);
 }

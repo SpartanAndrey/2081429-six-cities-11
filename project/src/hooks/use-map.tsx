@@ -3,8 +3,8 @@ import { City } from '../types/offers';
 import { Map, TileLayer } from 'leaflet';
 import { MutableRefObject, useState, useEffect, useRef } from 'react';
 import { useAppSelector } from '../hooks';
+import { getCurrentCity } from '../store/selector';
 import { defaultCity } from '../const';
-
 
 const LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const ATTRIBUTE = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
@@ -15,7 +15,7 @@ function useMap(
   : Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
-  const selectedCity = useAppSelector((state) => state.currentCity);
+  const currentCity = useAppSelector(getCurrentCity);
 
   const center: City = offer?.city || defaultCity;
 
@@ -43,7 +43,7 @@ function useMap(
       isRenderedRef.current = true;
     }
     map?.setView([center.location.latitude, center.location.longitude], 10);
-  },[mapRef, map, center, selectedCity]);
+  },[mapRef, map, center, currentCity]);
 
   return map;
 }
