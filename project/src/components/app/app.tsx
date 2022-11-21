@@ -10,13 +10,12 @@ import { Offer } from '../../types/offers';
 import { Review } from '../../types/reviews';
 
 type AppProps = {
-  placesCount: number;
   offers: Offer[];
   offersNearby: Offer[];
   reviews: Review[];
 }
 
-function App({placesCount, offers, offersNearby, reviews}: AppProps): JSX.Element {
+function App({offers, offersNearby, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>

@@ -9,14 +9,15 @@ import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCity } from '../../store/action';
 import { getSortOffers } from '../../utils';
+import { getOffersList, getCurrentCity, getCurrentSortType } from '../../store/selector';
 
 function MainPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const allOffers = useAppSelector((state) => state.offersList);
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const currentSortType = useAppSelector((state) => state.currentSortType);
+  const allOffers = useAppSelector(getOffersList);
+  const currentCity = useAppSelector(getCurrentCity);
+  const currentSortType = useAppSelector(getCurrentSortType);
 
   const selectedOffers = allOffers.filter(({ city }) => city.name === currentCity);
   const sortOffers = getSortOffers(currentSortType, selectedOffers);

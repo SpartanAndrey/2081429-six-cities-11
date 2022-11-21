@@ -2,16 +2,12 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SortType } from '../../const';
 import { setCurrentSortType } from '../../store/action';
-
-/*type SortingProps = {
-  selectedCity: string;
-  onCityChange: (city: string) => void;
-}*/
+import { getCurrentSortType } from '../../store/selector';
 
 function Sorting(): JSX.Element {
 
   const dispatch = useAppDispatch();
-  const currentSortType = useAppSelector((state) => state.currentSortType);
+  const currentSortType = useAppSelector(getCurrentSortType);
 
   const [popupState, setPopupState] = useState(false);
 
