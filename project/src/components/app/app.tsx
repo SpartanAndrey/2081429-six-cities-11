@@ -1,4 +1,5 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -8,6 +9,8 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PropertyPage from '../../pages/property-page/property-page';
 import { Offer } from '../../types/offers';
 import { Review } from '../../types/reviews';
+import LoadingOffers from '../loading-offers/loading-offers';
+import { getOffersLoadingStatus } from '../../store/selector';
 
 type AppProps = {
   offers: Offer[];
@@ -16,6 +19,15 @@ type AppProps = {
 }
 
 function App({offers, offersNearby, reviews}: AppProps): JSX.Element {
+
+  const isOffersLoading = useAppSelector(getOffersLoadingStatus);
+
+  if (isOffersLoading) {
+    return (
+      <LoadingOffers />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>

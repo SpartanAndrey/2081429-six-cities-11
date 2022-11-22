@@ -2,7 +2,7 @@ import { Offer } from '../types/offers';
 
 export const offers: Offer[] = [
   {
-    id: 1,
+    id: 104,
     previewImage: 'img/apartment-01.jpg',
     isPremium: true,
     price: 120,
@@ -16,10 +16,14 @@ export const offers: Offer[] = [
         latitude: 51.2217,
         longitude: 6.77616,
       },
-    }
+    },
+    location: {
+      latitude: 51.2217,
+      longitude: 6.77616,
+    },
   },
   {
-    id: 2,
+    id: 105,
     previewImage: 'img/apartment-02.jpg',
     isPremium: false,
     price: 90,
@@ -33,10 +37,14 @@ export const offers: Offer[] = [
         latitude: 52.3609553943508,
         longitude: 4.85309666406198,
       },
-    }
+    },
+    location: {
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+    },
   },
   {
-    id: 3,
+    id: 106,
     previewImage: 'img/apartment-03.jpg',
     isPremium: false,
     price: 200,
@@ -50,10 +58,14 @@ export const offers: Offer[] = [
         latitude: 52.3909553943508,
         longitude: 4.929309666406198,
       },
-    }
+    },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+    },
   },
   {
-    id: 4,
+    id: 107,
     previewImage: 'img/apartment-small-03.jpg',
     isPremium: true,
     price: 450,
@@ -67,7 +79,11 @@ export const offers: Offer[] = [
         latitude: 48.8534,
         longitude: 2.3488,
       },
-    }
+    },
+    location: {
+      latitude: 48.8534,
+      longitude: 2.3488,
+    },
   },
   {
     id: 9,
@@ -84,6 +100,10 @@ export const offers: Offer[] = [
         latitude: 52.3534,
         longitude: 4.9488,
       },
-    }
+    },
+    location: {
+      latitude: 52.3534,
+      longitude: 4.9488,
+    },
   }
 ];

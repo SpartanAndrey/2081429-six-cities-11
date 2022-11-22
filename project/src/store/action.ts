@@ -11,3 +11,7 @@ export const setOffers = createAction<{offersList: Offer[]}>('offers/fillIn');
 export const setCurrentSortType = createAction('offers/sort', (sortType: SortType) => ({
   payload: sortType,
 }));
+
+export const loadOffersFromServer = createAction<Offer[]>('offers/load');
+
+export const setOffersLoadingStatus = createAction<boolean>('offers/setOffersLoadingStatus');

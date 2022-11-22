@@ -2,7 +2,7 @@ import { Offer } from '../types/offers';
 
 export const offersNearby: Offer[] = [
   {
-    id: 5,
+    id: 100,
     previewImage: 'img/apartment-02.jpg',
     isPremium: true,
     price: 500,
@@ -16,10 +16,14 @@ export const offersNearby: Offer[] = [
         latitude: 52.2909553943508,
         longitude: 4.83309666406198,
       },
-    }
+    },
+    location: {
+      latitude: 52.2909553943508,
+      longitude: 4.83309666406198,
+    },
   },
   {
-    id: 6,
+    id: 101,
     previewImage: 'img/apartment-03.jpg',
     isPremium: false,
     price: 50,
@@ -33,10 +37,14 @@ export const offersNearby: Offer[] = [
         latitude: 52.3709553943508,
         longitude: 4.82309666406198,
       },
-    }
+    },
+    location: {
+      latitude: 52.3709553943508,
+      longitude: 4.82309666406198,
+    },
   },
   {
-    id: 7,
+    id: 102,
     previewImage: 'img/apartment-03.jpg',
     isPremium: true,
     price: 100,
@@ -50,6 +58,10 @@ export const offersNearby: Offer[] = [
         latitude: 52.1909553943508,
         longitude: 4.729309666406198,
       },
-    }
+    },
+    location: {
+      latitude: 52.1909553943508,
+      longitude: 4.729309666406198,
+    },
   }
 ];

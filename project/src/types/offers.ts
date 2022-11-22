@@ -8,6 +8,10 @@ export type Offer = {
   rating: number;
   isFavorite: boolean;
   city: City;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
 }
 
 export type City = {
@@ -17,3 +21,4 @@ export type City = {
     longitude: number;
   };
 }
+
