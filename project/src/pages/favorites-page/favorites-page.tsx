@@ -3,19 +3,19 @@ import ListFavorites from '../../components/list-favorites/list-favorites';
 import Logo from '../../components/logo/logo';
 import { Offer } from '../../types/offers';
 import { useState } from 'react';
+import { useAppSelector } from '../../hooks';
+import { getOffers } from '../../store/selector';
 
-type FavoritesPageProps = {
-  offers: Offer[];
-}
+function FavoritesPage(): JSX.Element {
 
-function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
+  const allOffers = useAppSelector(getOffers);
 
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteOffers = allOffers.filter((offer) => offer.isFavorite);
 
   const [, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const onListOfferHoverOn = (offerId: number | undefined) => {
-    const currentOffer = offers.find((offer) => offer.id === offerId);
+    const currentOffer = allOffers.find((offer) => offer.id === offerId);
 
     setSelectedOffer(currentOffer);
   };

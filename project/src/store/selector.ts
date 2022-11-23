@@ -1,7 +1,9 @@
 import { State } from '../types/state';
 
-export const getOffersList = (state: State) => state.offersList;
+export const getOffers = (state: State) => state.offers.data;
+
+export const getOffersNearby = (state: State) => state.offersNearby.data;
 
 export const getCurrentCity = (state: State) => state.currentCity;
 
-export const getCurrentSortType = (state: State) => state.currentSortType;
+export const getOffersLoadingStatus = (state: State) => state.offers.isOffersLoading;

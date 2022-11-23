@@ -14,3 +14,7 @@ export const getSortOffers = (sortType: SortType, offers: Offer[]) => {
   }
 };
 
+export const capitalizeFirstLetter = (str: string) => str[0].toUpperCase() + str.slice(1);
+
+export const pluralCheck = (value: number, str: string) => value === 1 ? str : str.concat('s');
+

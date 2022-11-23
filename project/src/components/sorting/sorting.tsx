@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SortType } from '../../const';
-import { setCurrentSortType } from '../../store/action';
-import { getCurrentSortType } from '../../store/selector';
 
-function Sorting(): JSX.Element {
+type SortingProps = {
+  currentSortType: SortType;
+  onSortTypeClick: (sortType: SortType) => void;
+}
 
-  const dispatch = useAppDispatch();
-  const currentSortType = useAppSelector(getCurrentSortType);
+function Sorting({ currentSortType, onSortTypeClick }: SortingProps): JSX.Element {
 
   const [popupState, setPopupState] = useState(false);
 
@@ -17,7 +16,7 @@ function Sorting(): JSX.Element {
 
   const handleSortListClick = (sortType: SortType) => {
     setPopupState(!popupState);
-    dispatch(setCurrentSortType(sortType));
+    onSortTypeClick(sortType);
   };
 
   return (

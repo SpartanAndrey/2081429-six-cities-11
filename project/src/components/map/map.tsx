@@ -35,8 +35,8 @@ function Map({ offers, selectedOffer}: MapProps): JSX.Element {
     if (map) {
       offers && offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.city.location.latitude,
-          lng: offer.city.location.longitude,
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
         });
 
         marker

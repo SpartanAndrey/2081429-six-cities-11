@@ -9,15 +9,21 @@ import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCity } from '../../store/action';
 import { getSortOffers } from '../../utils';
-import { getOffersList, getCurrentCity, getCurrentSortType } from '../../store/selector';
+import { getOffers, getCurrentCity } from '../../store/selector';
+import { SortType } from '../../const';
 
 function MainPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const allOffers = useAppSelector(getOffersList);
+  const allOffers = useAppSelector(getOffers);
   const currentCity = useAppSelector(getCurrentCity);
-  const currentSortType = useAppSelector(getCurrentSortType);
+
+  const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Default);
+
+  const onSortTypeClick = (sortType: SortType) => {
+    setCurrentSortType(sortType);
+  };
 
   const selectedOffers = allOffers.filter(({ city }) => city.name === currentCity);
   const sortOffers = getSortOffers(currentSortType, selectedOffers);
@@ -60,7 +66,7 @@ function MainPage(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{selectedOffers.length} {selectedOffers.length === 1 ? 'place' : 'places'} to stay in {currentCity}</b>
-              <Sorting />
+              <Sorting currentSortType={currentSortType} onSortTypeClick={onSortTypeClick}/>
               <div className="cities__places-list places__list tabs__content">
                 <ListOffers
                   offers={sortOffers} onListOfferHoverOn={onListOfferHoverOn}

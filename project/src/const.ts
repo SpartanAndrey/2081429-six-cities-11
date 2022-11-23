@@ -5,6 +5,12 @@ export enum AppRoute {
   Room = '/offers/:id'
 }
 
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -25,6 +31,7 @@ export const defaultCity = {
   location: {
     latitude: 48.8534,
     longitude: 2.3488,
+    zoom: 10,
   },
 };
 

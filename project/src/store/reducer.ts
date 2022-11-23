@@ -1,12 +1,28 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { offers } from '../mocks/offers';
-import {setCurrentCity, setOffers, setCurrentSortType } from './action';
-import { CITIES, SortType } from '../const';
+import {setCurrentCity, loadOffersFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus } from './action';
+import { CITIES } from '../const';
+import { Offer } from '../types/offers';
 
-const initialState = {
+type initState = {
+  currentCity: string;
+  offers: {
+    data: Offer[];
+    isOffersLoading: boolean;
+  };
+  offersNearby: {
+    data: Offer[];
+  };
+}
+
+const initialState: initState = {
   currentCity: CITIES[0],
-  offersList: offers,
-  currentSortType: SortType.Default as SortType,
+  offers: {
+    data: [],
+    isOffersLoading: false,
+  },
+  offersNearby: {
+    data: [],
+  }
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -14,12 +30,14 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setCurrentCity, (state, action) => {
       state.currentCity = action.payload;
     })
-    .addCase(setOffers, (state, action) => {
-      const { offersList } = action.payload;
-      state.offersList = offersList;
+    .addCase(loadOffersFromServer, (state, action) => {
+      state.offers.data = action.payload;
     })
-    .addCase(setCurrentSortType, (state, action) => {
-      state.currentSortType = action.payload;
+    .addCase(loadOffersNearbyFromServer, (state, action) => {
+      state.offersNearby.data = action.payload;
+    })
+    .addCase(setOffersLoadingStatus, (state, action) => {
+      state.offers.isOffersLoading = action.payload;
     });
 });
 

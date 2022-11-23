@@ -28,7 +28,7 @@ function useMap(
           lat: center.location.latitude,
           lng: center.location.longitude
         },
-        zoom: 10,
+        zoom: center.location.zoom,
       });
 
       const layer = new TileLayer(
@@ -42,7 +42,7 @@ function useMap(
 
       isRenderedRef.current = true;
     }
-    map?.setView([center.location.latitude, center.location.longitude], 10);
+    map?.setView([center.location.latitude, center.location.longitude], center.location.zoom);
   },[mapRef, map, center, currentCity]);
 
   return map;
