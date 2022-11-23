@@ -7,7 +7,6 @@ const override: CSSProperties = {
 };
 
 function LoadingOffers(): JSX.Element {
-
   return (
     <div className="sweet-loading">
       <ClipLoader
