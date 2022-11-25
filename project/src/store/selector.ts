@@ -10,6 +10,4 @@ export const getOffersLoadingStatus = (state: State) => state.offers.isOffersLoa
 
 export const getAuthorizationStatus = (state: State) => state.server.authStatus;
 
-export const getError = (state: State) => state.server.error;
-
 export const getUserData = (state: State) => state.server.userData;
