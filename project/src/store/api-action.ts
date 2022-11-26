@@ -2,7 +2,8 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import { Offer } from '../types/offers';
-import { loadOffersFromServer, loadSelectedOfferFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus, checkAuthorization, setUserData, redirectToRoute } from './action';
+import { Review } from '../types/reviews';
+import { loadOffersFromServer, loadSelectedOfferFromServer, loadOffersNearbyFromServer, loadReviewsFromServer, setOffersLoadingStatus, checkAuthorization, setUserData, redirectToRoute } from './action';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { AuthData } from '../types/auth-data.js';
 import { UserData } from '../types/user-data.js';
@@ -83,14 +84,26 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   );
 
 export const logoutAction = createAsyncThunk<void, undefined, {
-    dispatch: AppDispatch;
-    state: State;
-    extra: AxiosInstance;
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
   }>(
     'user/logout',
     async (_arg, {dispatch, extra: api}) => {
       await api.delete(APIRoute.Logout);
       dropToken();
       dispatch(checkAuthorization(AuthorizationStatus.NoAuth));
+    },
+  );
+
+export const fetchReviewsAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+  }>(
+    'data/fetchComments',
+    async (id, {dispatch, extra: api}) => {
+      const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
+      dispatch(loadReviewsFromServer(data));
     },
   );

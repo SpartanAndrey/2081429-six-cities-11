@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {setCurrentCity, loadOffersFromServer, loadSelectedOfferFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus, checkAuthorization, setUserData } from './action';
+import {setCurrentCity, loadOffersFromServer, loadSelectedOfferFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus, checkAuthorization, setUserData, loadReviewsFromServer } from './action';
 import { CITIES, AuthorizationStatus } from '../const';
 import { Offer } from '../types/offers';
 import { UserData } from '../types/user-data';
+import { Review } from '../types/reviews';
 
 type initState = {
   currentCity: string;
@@ -13,6 +14,9 @@ type initState = {
   };
   offersNearby: {
     data: Offer[];
+  };
+  reviews: {
+    data: Review[];
   };
   server: {
     authStatus: AuthorizationStatus;
@@ -27,6 +31,9 @@ const initialState: initState = {
     isOffersLoading: false,
   },
   offersNearby: {
+    data: [],
+  },
+  reviews: {
     data: [],
   },
   server: {
@@ -48,6 +55,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffersNearbyFromServer, (state, action) => {
       state.offersNearby.data = action.payload;
+    })
+    .addCase(loadReviewsFromServer, (state, action) => {
+      state.reviews.data = action.payload;
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.offers.isOffersLoading = action.payload;
