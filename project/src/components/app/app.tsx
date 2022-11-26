@@ -12,7 +12,7 @@ import LoadingOffers from '../loading-offers/loading-offers';
 import { getOffersLoadingStatus, getAuthorizationStatus } from '../../store/selector';
 import { useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
-import { fetchOfferAction, checkAuthAction } from '../../store/api-action';
+import { fetchAllOffersAction, checkAuthAction } from '../../store/api-action';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
@@ -24,7 +24,7 @@ function App({ reviews}: AppProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchOfferAction());
+    dispatch(fetchAllOffersAction());
     dispatch(checkAuthAction());
   }, [dispatch]);
 
@@ -67,7 +67,7 @@ function App({ reviews}: AppProps): JSX.Element {
           />
         </Route>
         <Route
-          path="*"
+          path={AppRoute.NotFound}
           element={<NotFoundPage />}
         />
       </Routes>

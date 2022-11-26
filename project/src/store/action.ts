@@ -9,6 +9,8 @@ export const setCurrentCity = createAction('city/change', (city: string) => ({
 
 export const loadOffersFromServer = createAction<Offer[]>('offers/load');
 
+export const loadSelectedOfferFromServer = createAction<Offer>('offers/loadSelectedOffer');
+
 export const loadOffersNearbyFromServer = createAction<Offer[]>('offersNearby/load');
 
 export const setOffersLoadingStatus = createAction<boolean>('offers/setOffersLoadingStatus');

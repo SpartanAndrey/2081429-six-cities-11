@@ -2,13 +2,13 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import { Offer } from '../types/offers';
-import { loadOffersFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus, checkAuthorization, setUserData, redirectToRoute } from './action';
+import { loadOffersFromServer, loadSelectedOfferFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus, checkAuthorization, setUserData, redirectToRoute } from './action';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { AuthData } from '../types/auth-data.js';
 import { UserData } from '../types/user-data.js';
 import {saveToken, dropToken} from '../services/token';
 
-export const fetchOfferAction = createAsyncThunk<void, undefined, {
+export const fetchAllOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -22,15 +22,30 @@ export const fetchOfferAction = createAsyncThunk<void, undefined, {
     },
   );
 
+export const fetchSelectedOfferAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+  }>(
+    'data/fetchSelectedOffer',
+    async (id, {dispatch, extra: api}) => {
+      try {
+        const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+        dispatch(loadSelectedOfferFromServer(data));
+      } catch {
+        dispatch(redirectToRoute(AppRoute.NotFound));
+      }
+    }
+  );
+
 export const fetchOffersNearbyAction = createAsyncThunk<void, number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
   }>(
-    'data, fetchOffersNearBy',
+    'data/fetchOffersNearBy',
     async (id, {dispatch, extra: api}) => {
       const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
-
       dispatch(loadOffersNearbyFromServer(data));
     }
   );

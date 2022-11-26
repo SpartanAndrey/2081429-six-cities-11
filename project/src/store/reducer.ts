@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {setCurrentCity, loadOffersFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus, checkAuthorization, setUserData } from './action';
+import {setCurrentCity, loadOffersFromServer, loadSelectedOfferFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus, checkAuthorization, setUserData } from './action';
 import { CITIES, AuthorizationStatus } from '../const';
 import { Offer } from '../types/offers';
 import { UserData } from '../types/user-data';
@@ -9,6 +9,7 @@ type initState = {
   offers: {
     data: Offer[];
     isOffersLoading: boolean;
+    selectedOffer?: Offer;
   };
   offersNearby: {
     data: Offer[];
@@ -41,6 +42,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffersFromServer, (state, action) => {
       state.offers.data = action.payload;
+    })
+    .addCase(loadSelectedOfferFromServer, (state, action) => {
+      state.offers.selectedOffer = action.payload;
     })
     .addCase(loadOffersNearbyFromServer, (state, action) => {
       state.offersNearby.data = action.payload;

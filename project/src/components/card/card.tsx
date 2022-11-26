@@ -1,7 +1,6 @@
-import { Link, useLocation } from 'react-router-dom';
-import { AppRoute} from '../../const';
+import { Link, useLocation, generatePath } from 'react-router-dom';
 import { Offer } from '../../types/offers';
-import { RATING_COEF } from '../../const';
+import { AppRoute, RATING_COEF } from '../../const';
 
 type cardProps ={
   offer: Offer;
@@ -44,6 +43,8 @@ function Card({offer, onOfferHoverOn}: cardProps): JSX.Element {
     onOfferHoverOn(undefined);
   };
 
+  const selectedOfferPath = generatePath(AppRoute.Room, {id: id.toString()});
+
   return (
     <article className={`${getArticleClass(currentPath)} place-card`}
       onMouseEnter={handleHoverOn}
@@ -54,9 +55,9 @@ function Card({offer, onOfferHoverOn}: cardProps): JSX.Element {
           <span>Premium</span>
         </div>}
       <div className={`${getImageWrapperClass(currentPath)} place-card__image-wrapper`}>
-        <a href="#todo">
+        <Link to={selectedOfferPath}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Something should be here"/>
-        </a>
+        </Link>
       </div>
       <div className={`${currentPath === AppRoute.Favorites ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">

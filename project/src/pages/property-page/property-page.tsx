@@ -8,9 +8,9 @@ import { Review } from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 import { RATING_COEF } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getOffers, getOffersNearby } from '../../store/selector';
+import { getSelectedOffer, getOffersNearby } from '../../store/selector';
 import { useEffect } from 'react';
-import { fetchOffersNearbyAction } from '../../store/api-action';
+import { fetchSelectedOfferAction, fetchOffersNearbyAction } from '../../store/api-action';
 import { capitalizeFirstLetter, pluralCheck } from '../../utils';
 
 type propertyPageProps = {
@@ -21,22 +21,19 @@ function PropertyPage({ reviews = [] }: propertyPageProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const allOffers = useAppSelector(getOffers);
-
   const params = useParams();
 
   const currentId = Number(params.id);
 
-  const selectedOffer = allOffers.find((offer) => offer.id === currentId);
-
   useEffect(() => {
+    dispatch(fetchSelectedOfferAction(currentId));
     dispatch(fetchOffersNearbyAction(currentId));
   }, [currentId, dispatch]);
 
   const offersNearby = useAppSelector(getOffersNearby);
+  const selectedOffer = useAppSelector(getSelectedOffer);
 
   const offersOnMap = selectedOffer ? [...offersNearby, selectedOffer] : offersNearby;
-
 
   return (
     <div className="page">
