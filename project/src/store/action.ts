@@ -8,13 +8,13 @@ export const setCurrentCity = createAction('city/change', (city: string) => ({
   payload: city,
 }));
 
-export const loadOffersFromServer = createAction<Offer[]>('offers/load');
+export const loadOffers = createAction<Offer[]>('offers/load');
 
-export const loadSelectedOfferFromServer = createAction<Offer>('offers/loadSelectedOffer');
+export const loadSelectedOffer = createAction<Offer>('offers/loadSelectedOffer');
 
-export const loadOffersNearbyFromServer = createAction<Offer[]>('offersNearby/load');
+export const loadOffersNearby = createAction<Offer[]>('offersNearby/load');
 
-export const loadReviewsFromServer = createAction<Review[]>('reviews/load');
+export const loadReviews = createAction<Review[]>('reviews/load');
 
 export const setOffersLoadingStatus = createAction<boolean>('offers/setOffersLoadingStatus');
 

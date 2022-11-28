@@ -7,9 +7,9 @@ import SignOut from '../sign-out/sign-out';
 function Account(): JSX.Element {
 
   const user = useAppSelector(getUserData);
-  const authStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthorized = useAppSelector(getAuthorizationStatus);
 
-  const userCheck = user && authStatus === AuthorizationStatus.Auth;
+  const userCheck = user && isAuthorized === AuthorizationStatus.Auth;
 
 
   return(

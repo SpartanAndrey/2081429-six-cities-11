@@ -12,6 +12,6 @@ export const getCurrentCity = (state: State) => state.currentCity;
 
 export const getOffersLoadingStatus = (state: State) => state.offers.isOffersLoading;
 
-export const getAuthorizationStatus = (state: State) => state.server.authStatus;
+export const getAuthorizationStatus = (state: State) => state.userData.authStatus;
 
-export const getUserData = (state: State) => state.server.userData;
+export const getUserData = (state: State) => state.userData.user;

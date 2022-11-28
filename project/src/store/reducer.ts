@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {setCurrentCity, loadOffersFromServer, loadSelectedOfferFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus, checkAuthorization, setUserData, loadReviewsFromServer } from './action';
+import {setCurrentCity, loadOffers, loadSelectedOffer, loadOffersNearby, setOffersLoadingStatus, checkAuthorization, setUserData, loadReviews } from './action';
 import { CITIES, AuthorizationStatus } from '../const';
 import { Offer } from '../types/offers';
 import { UserData } from '../types/user-data';
@@ -18,9 +18,9 @@ type initState = {
   reviews: {
     data: Review[];
   };
-  server: {
+  userData: {
     authStatus: AuthorizationStatus;
-    userData: UserData | null;
+    user: UserData | null;
   };
 }
 
@@ -36,9 +36,9 @@ const initialState: initState = {
   reviews: {
     data: [],
   },
-  server: {
+  userData: {
     authStatus: AuthorizationStatus.Unknown,
-    userData: null,
+    user: null,
   }
 };
 
@@ -47,26 +47,26 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setCurrentCity, (state, action) => {
       state.currentCity = action.payload;
     })
-    .addCase(loadOffersFromServer, (state, action) => {
+    .addCase(loadOffers, (state, action) => {
       state.offers.data = action.payload;
     })
-    .addCase(loadSelectedOfferFromServer, (state, action) => {
+    .addCase(loadSelectedOffer, (state, action) => {
       state.offers.selectedOffer = action.payload;
     })
-    .addCase(loadOffersNearbyFromServer, (state, action) => {
+    .addCase(loadOffersNearby, (state, action) => {
       state.offersNearby.data = action.payload;
     })
-    .addCase(loadReviewsFromServer, (state, action) => {
+    .addCase(loadReviews, (state, action) => {
       state.reviews.data = action.payload;
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.offers.isOffersLoading = action.payload;
     })
     .addCase(checkAuthorization, (state, action) => {
-      state.server.authStatus = action.payload;
+      state.userData.authStatus = action.payload;
     })
     .addCase(setUserData, (state, action) => {
-      state.server.userData = action.payload;
+      state.userData.user = action.payload;
     });
 });
 

@@ -17,9 +17,9 @@ function PropertyHost({ offer }: propertyHost): JSX.Element {
           {offer.host.name}
         </span>
         {offer.host.isPro &&
-                  <span className="property__user-status">
-                    Pro
-                  </span>}
+          <span className="property__user-status">
+            Pro
+          </span>}
       </div>
       <div className="property__description">
         <p className="property__text">

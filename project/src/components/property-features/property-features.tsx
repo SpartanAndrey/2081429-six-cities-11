@@ -11,9 +11,9 @@ function PropertyFeatures({ offer }: propertyFeatures): JSX.Element {
   return (
     <div className="property__wrapper">
       {offer.isPremium &&
-                <div className="place-card__mark">
-                  <span>Premium</span>
-                </div>}
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>}
       <div className="property__name-wrapper">
         <h1 className="property__name">
           {offer.title}
@@ -40,7 +40,7 @@ function PropertyFeatures({ offer }: propertyFeatures): JSX.Element {
           {offer.bedrooms} {pluralCheck(offer.bedrooms, 'Bedroom')}
         </li>
         <li className="property__feature property__feature--adults">
-                  Max {offer.maxAdults} {pluralCheck(offer.maxAdults, 'adult')}
+          Max {offer.maxAdults} {pluralCheck(offer.maxAdults, 'adult')}
         </li>
       </ul>
       <div className="property__price">
