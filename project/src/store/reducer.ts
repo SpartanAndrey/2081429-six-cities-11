@@ -1,16 +1,26 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {setCurrentCity, loadOffersFromServer, loadOffersNearbyFromServer, setOffersLoadingStatus } from './action';
-import { CITIES } from '../const';
+import {setCurrentCity, loadOffers, loadSelectedOffer, loadOffersNearby, setOffersLoadingStatus, checkAuthorization, setUserData, loadReviews } from './action';
+import { CITIES, AuthorizationStatus } from '../const';
 import { Offer } from '../types/offers';
+import { UserData } from '../types/user-data';
+import { Review } from '../types/reviews';
 
 type initState = {
   currentCity: string;
   offers: {
     data: Offer[];
     isOffersLoading: boolean;
+    selectedOffer?: Offer;
   };
   offersNearby: {
     data: Offer[];
+  };
+  reviews: {
+    data: Review[];
+  };
+  userData: {
+    authStatus: AuthorizationStatus;
+    user: UserData | null;
   };
 }
 
@@ -22,6 +32,13 @@ const initialState: initState = {
   },
   offersNearby: {
     data: [],
+  },
+  reviews: {
+    data: [],
+  },
+  userData: {
+    authStatus: AuthorizationStatus.Unknown,
+    user: null,
   }
 };
 
@@ -30,14 +47,26 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setCurrentCity, (state, action) => {
       state.currentCity = action.payload;
     })
-    .addCase(loadOffersFromServer, (state, action) => {
+    .addCase(loadOffers, (state, action) => {
       state.offers.data = action.payload;
     })
-    .addCase(loadOffersNearbyFromServer, (state, action) => {
+    .addCase(loadSelectedOffer, (state, action) => {
+      state.offers.selectedOffer = action.payload;
+    })
+    .addCase(loadOffersNearby, (state, action) => {
       state.offersNearby.data = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews.data = action.payload;
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.offers.isOffersLoading = action.payload;
+    })
+    .addCase(checkAuthorization, (state, action) => {
+      state.userData.authStatus = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.userData.user = action.payload;
     });
 });
 

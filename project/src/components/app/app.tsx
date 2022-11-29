@@ -1,4 +1,4 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
@@ -9,10 +9,12 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PropertyPage from '../../pages/property-page/property-page';
 import { Review } from '../../types/reviews';
 import LoadingOffers from '../loading-offers/loading-offers';
-import { getOffersLoadingStatus } from '../../store/selector';
+import { getOffersLoadingStatus, getAuthorizationStatus } from '../../store/selector';
 import { useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
-import { fetchOfferAction } from '../../store/api-action';
+import { fetchAllOffersAction, checkAuthAction } from '../../store/api-action';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   reviews: Review[];
@@ -22,19 +24,21 @@ function App({ reviews}: AppProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchOfferAction());
+    dispatch(fetchAllOffersAction());
+    dispatch(checkAuthAction());
   }, [dispatch]);
 
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersLoading = useAppSelector(getOffersLoadingStatus);
 
-  if (isOffersLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
     return (
       <LoadingOffers />
     );
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -45,7 +49,7 @@ function App({ reviews}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <FavoritesPage />
             </PrivateRoute>
           }
@@ -63,11 +67,11 @@ function App({ reviews}: AppProps): JSX.Element {
           />
         </Route>
         <Route
-          path="*"
+          path={AppRoute.NotFound}
           element={<NotFoundPage />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
