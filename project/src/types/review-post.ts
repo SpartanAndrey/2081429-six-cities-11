@@ -4,7 +4,3 @@ export type NewReview = {
   rating: number;
 };
 
-export type NewReviewData = {
-  comment: string;
-  rating: number;
-};

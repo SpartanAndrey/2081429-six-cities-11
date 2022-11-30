@@ -13,25 +13,25 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState({
-    id: offerId,
-    rating: 0,
-    comment: '',
+    rating: '',
+    review: '',
   });
 
-  const ratingChangeHandle = (evt: ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, rating: Number(evt.target.value)});
-  };
-
-  const commentChangeHandle = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData({...formData, comment: evt.target.value});
+  const fieldChangeHandle = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {name, value} = evt.target;
+    setFormData({...formData, [name]: value});
   };
 
   const submitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    dispatch(postReviewAction(formData));
+    dispatch(postReviewAction({
+      id: offerId,
+      comment: formData.review,
+      rating: Number(formData.rating),
+    }));
 
-    setFormData({...formData, rating: 0, comment:''});
+    setFormData({rating: '', review:''});
 
   };
 
@@ -45,12 +45,12 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
             title={title}
             value={value}
             currentRating={formData.rating}
-            fieldChangeHandle={ratingChangeHandle}
+            fieldChangeHandle={fieldChangeHandle}
           />
         )
         )}
       </div>
-      <textarea onChange={commentChangeHandle} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" value={formData.comment}></textarea>
+      <textarea onChange={fieldChangeHandle} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" value={formData.review}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
