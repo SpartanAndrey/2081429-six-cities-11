@@ -7,7 +7,6 @@ import LoginPage from '../../pages/login-page/login-page';
 import MainPage from '../../pages/main-page/main-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PropertyPage from '../../pages/property-page/property-page';
-import { Review } from '../../types/reviews';
 import LoadingOffers from '../loading-offers/loading-offers';
 import { getOffersLoadingStatus, getAuthorizationStatus } from '../../store/selector';
 import { useAppDispatch } from '../../hooks';
@@ -16,11 +15,7 @@ import { fetchAllOffersAction, checkAuthAction } from '../../store/api-action';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
-type AppProps = {
-  reviews: Review[];
-}
-
-function App({ reviews}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -63,7 +58,7 @@ function App({ reviews}: AppProps): JSX.Element {
         >
           <Route
             path={AppRoute.Room}
-            element={<PropertyPage reviews={reviews}/>}
+            element={<PropertyPage/>}
           />
         </Route>
         <Route

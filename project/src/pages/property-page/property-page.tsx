@@ -6,20 +6,18 @@ import Map from '../../components/map/map';
 import ListOffers from '../../components/list-offers/list-offers';
 import PropertyFeatures from '../../components/property-features/property-features';
 import PropertyHost from '../../components/property-host/property-host';
-import { Review } from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSelectedOffer, getOffersNearby, getReviews } from '../../store/selector';
+import { getSelectedOffer, getOffersNearby, getReviews, getAuthorizationStatus } from '../../store/selector';
 import { useEffect } from 'react';
 import { fetchSelectedOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-action';
+import { AuthorizationStatus } from '../../const';
 
-type propertyPageProps = {
-  reviews: Review[];
-}
-
-function PropertyPage({ reviews = [] }: propertyPageProps): JSX.Element {
+function PropertyPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
+
+  const isAuthorized = useAppSelector(getAuthorizationStatus);
 
   const params = useParams();
 
@@ -65,7 +63,7 @@ function PropertyPage({ reviews = [] }: propertyPageProps): JSX.Element {
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsOnOffer.length}</span></h2>
               <ListReviews reviews={reviewsOnOffer} />
-              <ReviewForm />
+              {isAuthorized === AuthorizationStatus.Auth && <ReviewForm offerId={currentId}/>}
             </section>
           </div>
           <section className="property__map map">

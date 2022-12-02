@@ -15,3 +15,4 @@ export const getOffersLoadingStatus = (state: State) => state.offers.isOffersLoa
 export const getAuthorizationStatus = (state: State) => state.userData.authStatus;
 
 export const getUserData = (state: State) => state.userData.user;
+
