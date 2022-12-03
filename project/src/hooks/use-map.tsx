@@ -3,7 +3,7 @@ import { City } from '../types/offers';
 import { Map, TileLayer } from 'leaflet';
 import { MutableRefObject, useState, useEffect, useRef } from 'react';
 import { useAppSelector } from '../hooks';
-import { getCurrentCity } from '../store/selector';
+import { getCurrentCity } from '../store/data-process/data-selectors';
 import { defaultCity } from '../const';
 
 const LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';

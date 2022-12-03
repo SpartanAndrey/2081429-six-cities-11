@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../hooks';
-import { getUserData, getAuthorizationStatus } from '../../store/selector';
+import { getUserData, getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { AuthorizationStatus } from '../../const';
 import SignIn from '../sign-in/sign';
 import SignOut from '../sign-out/sign-out';

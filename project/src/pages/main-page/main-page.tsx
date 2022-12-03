@@ -7,10 +7,11 @@ import { Offer } from '../../types/offers';
 import { useState } from 'react';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCurrentCity } from '../../store/action';
 import { getSortOffers } from '../../utils';
-import { getOffers, getCurrentCity } from '../../store/selector';
+import { getOffers } from '../../store/data-process/data-selectors';
 import { SortType } from '../../const';
+import { getCurrentCity } from '../../store/data-process/data-selectors';
+import { setCurrentCity } from '../../store/data-process/data-process';
 
 function MainPage(): JSX.Element {
 

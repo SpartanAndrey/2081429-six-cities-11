@@ -19,6 +19,11 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+}
+
 export enum SortType {
   Default = 'Popular',
   PriceUp = 'Price: low to high',
