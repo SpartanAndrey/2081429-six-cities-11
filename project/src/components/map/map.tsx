@@ -5,7 +5,7 @@ import { Offer } from '../../types/offers';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
-import { getCurrentCity } from '../../store/selector';
+import { getCurrentCity } from '../../store/data-process/data-selectors';
 
 type MapProps = {
   offers: Offer[];

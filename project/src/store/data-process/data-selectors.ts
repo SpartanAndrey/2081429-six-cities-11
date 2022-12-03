@@ -1,0 +1,16 @@
+import { NameSpace } from '../../const';
+import { State } from '../../types/state';
+import { Offer } from '../../types/offers';
+import { Review } from '../../types/reviews';
+
+export const getOffers = (state: State): Offer[] => state[NameSpace.Data].offers.data;
+
+export const getSelectedOffer = (state: State): Offer | undefined => state[NameSpace.Data].offers.selectedOffer;
+
+export const getOffersNearby = (state: State): Offer[] => state[NameSpace.Data].offersNearby.data;
+
+export const getReviews = (state: State): Review[] => state[NameSpace.Data].reviews.data;
+
+export const getOffersLoadingStatus = (state: State): boolean => state[NameSpace.Data].offers.isOffersLoading;
+
+export const getCurrentCity = (state: State): string => state[NameSpace.Data].currentCity;

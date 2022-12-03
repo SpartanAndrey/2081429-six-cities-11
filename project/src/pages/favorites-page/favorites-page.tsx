@@ -4,7 +4,7 @@ import Logo from '../../components/logo/logo';
 import { Offer } from '../../types/offers';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/selector';
+import { getOffers } from '../../store/data-process/data-selectors';
 
 function FavoritesPage(): JSX.Element {
 

@@ -8,10 +8,12 @@ import PropertyFeatures from '../../components/property-features/property-featur
 import PropertyHost from '../../components/property-host/property-host';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSelectedOffer, getOffersNearby, getReviews, getAuthorizationStatus } from '../../store/selector';
+import { getSelectedOffer, getOffersNearby, getReviews } from '../../store/data-process/data-selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { useEffect } from 'react';
 import { fetchSelectedOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-action';
 import { AuthorizationStatus } from '../../const';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 function PropertyPage(): JSX.Element {
 
@@ -32,6 +34,10 @@ function PropertyPage(): JSX.Element {
   const offersNearby = useAppSelector(getOffersNearby);
   const selectedOffer = useAppSelector(getSelectedOffer);
   const reviewsOnOffer = useAppSelector(getReviews);
+
+  if (selectedOffer === undefined) {
+    return <NotFoundPage />;
+  }
 
   const offersOnMap = selectedOffer ? [...offersNearby, selectedOffer] : offersNearby;
 
