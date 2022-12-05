@@ -12,6 +12,7 @@ import { getOffers } from '../../store/data-process/data-selectors';
 import { SortType } from '../../const';
 import { getCurrentCity } from '../../store/data-process/data-selectors';
 import { setCurrentCity } from '../../store/data-process/data-process';
+import MainEmpty from '../../components/main-empty/main-empty';
 
 function MainPage(): JSX.Element {
 
@@ -62,25 +63,26 @@ function MainPage(): JSX.Element {
             />
           </section>
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{selectedOffers.length} {selectedOffers.length === 1 ? 'place' : 'places'} to stay in {currentCity}</b>
-              <Sorting currentSortType={currentSortType} onSortTypeClick={onSortTypeClick}/>
-              <div className="cities__places-list places__list tabs__content">
-                <ListOffers
-                  offers={sortOffers} onListOfferHoverOn={onListOfferHoverOn}
-                />
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map offers={selectedOffers} selectedOffer={selectedOffer} />
+        {selectedOffers.length === 0 ? <MainEmpty /> :
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{selectedOffers.length} {selectedOffers.length === 1 ? 'place' : 'places'} to stay in {currentCity}</b>
+                <Sorting currentSortType={currentSortType} onSortTypeClick={onSortTypeClick}/>
+                <div className="cities__places-list places__list tabs__content">
+                  <ListOffers
+                    offers={sortOffers} onListOfferHoverOn={onListOfferHoverOn}
+                  />
+                </div>
               </section>
+              <div className="cities__right-section">
+                <section className="cities__map map">
+                  <Map offers={selectedOffers} selectedOffer={selectedOffer} />
+                </section>
+              </div>
             </div>
-          </div>
-        </div>
+          </div>}
       </main>
     </div>
   );

@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CITIES, NameSpace } from '../../const';
 import { DataProcess } from '../../types/state';
-import { fetchAllOffersAction, fetchSelectedOfferAction, fetchOffersNearbyAction, fetchReviewsAction, postReviewAction } from '../api-action';
+import { Favorite } from '../../types/offers';
+import { fetchAllOffersAction, fetchSelectedOfferAction, fetchOffersNearbyAction, fetchReviewsAction, postReviewAction, fetchFavoriteOffersAction } from '../api-action';
 
 const initialState: DataProcess = {
   currentCity: CITIES[0],
+  favorites: {
+    data: [],
+    quantity: 0,
+  },
   offers: {
     data: [],
     isOffersLoading: false,
@@ -23,6 +28,28 @@ export const dataProcess = createSlice({
   reducers: {
     setCurrentCity: (state, action: PayloadAction<string>) => {
       state.currentCity = action.payload;
+    },
+    setOfferStatus: (state, action: PayloadAction<Favorite>) => {
+
+      action.payload.status === 0 ? state.favorites.quantity -= 1 : state.favorites.quantity += 1;
+
+      state.offers.data.forEach((offer) => {
+        if (offer.id === action.payload.id) {
+          offer.isFavorite = !offer.isFavorite;
+        }
+      });
+
+      if (state.offers.selectedOffer) {
+        state.offers.selectedOffer.isFavorite = !state.offers.selectedOffer.isFavorite;
+      }
+
+      state.offersNearby.data.forEach((offer) => {
+        if (offer.id === action.payload.id) {
+          offer.isFavorite = !offer.isFavorite;
+        }
+      });
+
+      state.favorites.data = state.favorites.data.filter((offer) => offer.isFavorite === false);
     },
   },
   extraReducers(builder) {
@@ -45,8 +72,11 @@ export const dataProcess = createSlice({
       })
       .addCase(postReviewAction.fulfilled, (state, action) => {
         state.reviews.data = action.payload;
+      })
+      .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
+        state.favorites.data = action.payload;
       });
   }
 });
 
-export const {setCurrentCity} = dataProcess.actions;
+export const {setCurrentCity, setOfferStatus} = dataProcess.actions;

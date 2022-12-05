@@ -1,13 +1,14 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-import { Offer } from '../types/offers';
+import { Favorite, Offer } from '../types/offers';
 import { Review } from '../types/reviews';
 import { APIRoute } from '../const';
 import { AuthData } from '../types/auth-data.js';
 import { UserData } from '../types/user-data.js';
 import {saveToken, resetToken} from '../services/token';
 import { NewReview } from '../types/review-post.js';
+import { setOfferStatus } from './data-process/data-process';
 
 export const fetchAllOffersAction = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;
@@ -45,14 +46,15 @@ export const fetchOffersNearbyAction = createAsyncThunk<Offer[], number, {
     }
   );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
   }>(
     'user/checkAuth',
     async (_arg, {extra: api}) => {
-      await api.get<UserData>(APIRoute.Login);
+      const {data} = await api.get<UserData>(APIRoute.Login);
+      return data;
     },
   );
 
@@ -104,3 +106,31 @@ export const postReviewAction = createAsyncThunk<Review[], NewReview, {
       return data;
     },
   );
+
+export const fetchFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+  }>(
+    'data/fetchFavoriteOffers',
+    async (_arg, {extra: api}) => {
+      const {data} = await api.get<Offer[]>(APIRoute.Favorites);
+      return data;
+    },
+  );
+
+export const changeFavoriteStatusAction = createAsyncThunk<void, Favorite, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/setFavoriteStatus',
+  async ({id, status}, {dispatch, extra: api}) => {
+    await api.post<void>(`${APIRoute.Favorites}/${id}/${status}`);
+    try {
+      dispatch(setOfferStatus({id, status}));
+    } catch {
+      throw(Error);
+    }
+  }
+);

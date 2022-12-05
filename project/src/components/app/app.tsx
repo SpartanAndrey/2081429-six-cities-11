@@ -25,6 +25,7 @@ function App(): JSX.Element {
   }, [dispatch]);
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const isOffersLoading = useAppSelector(getOffersLoadingStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {

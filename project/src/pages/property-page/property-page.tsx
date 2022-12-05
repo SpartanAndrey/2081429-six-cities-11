@@ -73,7 +73,7 @@ function PropertyPage(): JSX.Element {
             </section>
           </div>
           <section className="property__map map">
-            <Map offers={offersOnMap} selectedOffer={undefined} />
+            <Map offers={offersOnMap} selectedOffer={selectedOffer} />
           </section>
         </section>
         <div className="container">

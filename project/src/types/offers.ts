@@ -35,3 +35,7 @@ export type City = {
   };
 }
 
+export type Favorite = {
+  id: number;
+  status: number;
+}
