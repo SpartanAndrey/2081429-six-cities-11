@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CITIES, NameSpace } from '../../const';
 import { DataProcess } from '../../types/state';
-import { Favorite } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { fetchAllOffersAction, fetchSelectedOfferAction, fetchOffersNearbyAction, fetchReviewsAction, postReviewAction, fetchFavoriteOffersAction } from '../api-action';
 
 const initialState: DataProcess = {
@@ -19,6 +19,7 @@ const initialState: DataProcess = {
   },
   reviews: {
     data: [],
+    sendingStatus: false,
   },
 };
 
@@ -29,12 +30,16 @@ export const dataProcess = createSlice({
     setCurrentCity: (state, action: PayloadAction<string>) => {
       state.currentCity = action.payload;
     },
-    setOfferStatus: (state, action: PayloadAction<Favorite>) => {
-
-      action.payload.status === 0 ? state.favorites.quantity -= 1 : state.favorites.quantity += 1;
-
+    setCurrentOffer: (state, action: PayloadAction<Offer | undefined>) => {
+      state.offers.currentOffer = action.payload;
+    },
+    changeFavoriteOffersNumber: (state, action: PayloadAction<boolean>) => {
+      const count = action.payload ? 1 : -1;
+      state.favorites.quantity += count;
+    },
+    setOfferStatus: (state, action: PayloadAction<number>) => {
       state.offers.data.forEach((offer) => {
-        if (offer.id === action.payload.id) {
+        if (offer.id === action.payload) {
           offer.isFavorite = !offer.isFavorite;
         }
       });
@@ -44,12 +49,13 @@ export const dataProcess = createSlice({
       }
 
       state.offersNearby.data.forEach((offer) => {
-        if (offer.id === action.payload.id) {
+        if (offer.id === action.payload) {
           offer.isFavorite = !offer.isFavorite;
         }
       });
 
-      state.favorites.data = state.favorites.data.filter((offer) => offer.isFavorite === false);
+      state.favorites.data = state.favorites.data.filter((offer) => offer.id !== action.payload);
+
     },
   },
   extraReducers(builder) {
@@ -70,13 +76,18 @@ export const dataProcess = createSlice({
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews.data = action.payload;
       })
+      .addCase(postReviewAction.pending, (state) => {
+        state.reviews.sendingStatus = true;
+      })
       .addCase(postReviewAction.fulfilled, (state, action) => {
+        state.reviews.sendingStatus = false;
         state.reviews.data = action.payload;
       })
       .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
         state.favorites.data = action.payload;
+        state.favorites.quantity = action.payload.length;
       });
   }
 });
 
-export const {setCurrentCity, setOfferStatus} = dataProcess.actions;
+export const {setCurrentCity, setOfferStatus, changeFavoriteOffersNumber, setCurrentOffer} = dataProcess.actions;

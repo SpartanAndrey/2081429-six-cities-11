@@ -21,7 +21,7 @@ function Sorting({ currentSortType, onSortTypeClick }: SortingProps): JSX.Elemen
 
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0} onClick={handlePopupClick}>
         {currentSortType}
         <svg className="places__sorting-arrow" width="7" height="4">

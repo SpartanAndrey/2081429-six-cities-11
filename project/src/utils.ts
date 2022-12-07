@@ -1,5 +1,6 @@
 import { SortType } from './const';
 import { Offer } from './types/offers';
+import { Review } from './types/reviews';
 
 export const getSortOffers = (sortType: SortType, offers: Offer[]) => {
   switch (sortType) {
@@ -18,3 +19,4 @@ export const capitalizeFirstLetter = (str: string) => str[0].toUpperCase() + str
 
 export const pluralCheck = (value: number, str: string) => value === 1 ? str : str.concat('s');
 
+export const getSortReviewsByDate = (review: Review, reviewNext: Review) => Date.parse(reviewNext.date) - Date.parse(review.date);

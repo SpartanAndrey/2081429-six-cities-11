@@ -1,15 +1,25 @@
 import { FormEvent, useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-action';
 import { AuthData } from '../../types/auth-data';
-import { AppRoute, CITIES } from '../../const';
+import { AppRoute, AuthorizationStatus, CITIES } from '../../const';
 import { redirectToRoute } from '../../store/action';
+import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
+import { useEffect } from 'react';
 
 
 function LoginPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+  });
 
   const [authData, setAuthData] = useState({
     email: '',

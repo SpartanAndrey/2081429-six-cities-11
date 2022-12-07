@@ -3,16 +3,11 @@ import { Offer } from '../../types/offers';
 
 type FavoritesProps = {
   offers: Offer[];
-  onListOfferHoverOn: (id: number | undefined) => void;
 }
 
-function Favorites({offers = [], onListOfferHoverOn}: FavoritesProps): JSX.Element {
+function Favorites({offers = []}: FavoritesProps): JSX.Element {
 
   const cities = [...new Set(offers.map(({city}) => city.name))];
-
-  const handleHoverOn = (id: number | undefined) => {
-    onListOfferHoverOn(id);
-  };
 
   return (
     <main className="page__main page__main--favorites">
@@ -34,7 +29,6 @@ function Favorites({offers = [], onListOfferHoverOn}: FavoritesProps): JSX.Eleme
                     <Card
                       key={offer.id}
                       offer={offer}
-                      onOfferHoverOn={handleHoverOn}
                     /> : '')}
                 </div>
               </li>)

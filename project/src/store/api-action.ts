@@ -119,18 +119,15 @@ export const fetchFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
     },
   );
 
-export const changeFavoriteStatusAction = createAsyncThunk<void, Favorite, {
+export const changeFavoriteStatusAction = createAsyncThunk<Offer, Favorite, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/setFavoriteStatus',
   async ({id, status}, {dispatch, extra: api}) => {
-    await api.post<void>(`${APIRoute.Favorites}/${id}/${status}`);
-    try {
-      dispatch(setOfferStatus({id, status}));
-    } catch {
-      throw(Error);
-    }
+    const {data} = await api.post<Offer>(`${APIRoute.Favorites}/${id}/${status}`);
+    dispatch(setOfferStatus(id));
+    return data;
   }
 );

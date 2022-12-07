@@ -1,9 +1,7 @@
 import Account from '../../components/account/account';
 import Logo from '../../components/logo/logo';
-import { Offer } from '../../types/offers';
-import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFavorites } from '../../store/data-process/data-selectors';
+import { getFavorites, getFavoritesQuantity } from '../../store/data-process/data-selectors';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import Favorites from '../../components/favorites/favorites';
 import { Link } from 'react-router-dom';
@@ -15,19 +13,13 @@ function FavoritesPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
+  const favoriteOffers = useAppSelector(getFavorites);
+
+  const favoriteOffersQuantity = useAppSelector(getFavoritesQuantity);
+
   useEffect(() => {
     dispatch(fetchFavoriteOffersAction());
   }, [dispatch]);
-
-  const favoriteOffers = useAppSelector(getFavorites);
-
-  const [, setSelectedOffer] = useState<Offer | undefined>(undefined);
-
-  const onListOfferHoverOn = (offerId: number | undefined) => {
-    const currentOffer = favoriteOffers.find((offer) => offer.id === offerId);
-
-    setSelectedOffer(currentOffer);
-  };
 
   return (
     <div className="page">
@@ -40,7 +32,7 @@ function FavoritesPage(): JSX.Element {
         </div>
       </header>
 
-      {favoriteOffers.length === 0 ? <FavoritesEmpty /> : <Favorites offers={favoriteOffers} onListOfferHoverOn={onListOfferHoverOn}/>}
+      {favoriteOffersQuantity === 0 ? <FavoritesEmpty /> : <Favorites offers={favoriteOffers} />}
 
       <footer className="footer container">
         <Link className="footer__logo-link" to={AppRoute.Main}>

@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { redirectToRoute } from '../../store/action';
 import { changeFavoriteStatusAction } from '../../store/api-action';
+import { changeFavoriteOffersNumber } from '../../store/data-process/data-process';
 
 
 type propertyFeatures = {
@@ -26,6 +27,7 @@ function PropertyFeatures({ offer }: propertyFeatures): JSX.Element {
       id: offer.id,
       status: Number(!offer.isFavorite),
     }));
+    dispatch(changeFavoriteOffersNumber(!offer.isFavorite));
   };
 
   return (

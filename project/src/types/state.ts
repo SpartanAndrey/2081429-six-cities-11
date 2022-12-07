@@ -14,12 +14,14 @@ export type DataProcess = {
     data: Offer[];
     isOffersLoading: boolean;
     selectedOffer?: Offer;
+    currentOffer?: Offer;
   };
   offersNearby: {
     data: Offer[];
   };
   reviews: {
     data: Review[];
+    sendingStatus: boolean;
   };
 }
 

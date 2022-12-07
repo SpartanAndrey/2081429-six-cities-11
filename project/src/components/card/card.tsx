@@ -5,10 +5,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { redirectToRoute } from '../../store/action';
 import { changeFavoriteStatusAction } from '../../store/api-action';
+import { setCurrentOffer, changeFavoriteOffersNumber } from '../../store/data-process/data-process';
 
 type cardProps ={
   offer: Offer;
-  onOfferHoverOn: (id: number | undefined) => void;
 };
 
 const getArticleClass = (path: string) => {
@@ -33,7 +33,7 @@ const getImageWrapperClass = (path: string) => {
   }
 };
 
-function Card({offer, onOfferHoverOn}: cardProps): JSX.Element {
+function Card({offer}: cardProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
@@ -44,11 +44,11 @@ function Card({offer, onOfferHoverOn}: cardProps): JSX.Element {
   const currentPath = useLocation().pathname;
 
   const handleHoverOn = () => {
-    onOfferHoverOn(id);
+    dispatch(setCurrentOffer(offer));
   };
 
   const handleHoverAway = () => {
-    onOfferHoverOn(undefined);
+    dispatch(setCurrentOffer(undefined));
   };
 
   const hadnleFavoriteButtonClick = () => {
@@ -60,6 +60,7 @@ function Card({offer, onOfferHoverOn}: cardProps): JSX.Element {
       id: id,
       status: Number(!isFavorite),
     }));
+    dispatch(changeFavoriteOffersNumber(!isFavorite));
   };
 
   const selectedOfferPath = generatePath(AppRoute.Room, {id: id.toString()});

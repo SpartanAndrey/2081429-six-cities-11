@@ -3,14 +3,9 @@ import { Offer } from '../../types/offers';
 
 type ListOffersProps = {
   offers: Offer[];
-  onListOfferHoverOn: (id: number | undefined) => void;
 }
 
-function ListOffers({offers = [], onListOfferHoverOn}: ListOffersProps): JSX.Element {
-
-  const handleHoverOn = (id: number | undefined) => {
-    onListOfferHoverOn(id);
-  };
+function ListOffers({offers = []}: ListOffersProps): JSX.Element {
 
   return (
     <>
@@ -18,7 +13,6 @@ function ListOffers({offers = [], onListOfferHoverOn}: ListOffersProps): JSX.Ele
         <Card
           key={offer.id}
           offer={offer}
-          onOfferHoverOn={handleHoverOn}
         />)
       )}
     </>

@@ -1,8 +1,9 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { Ratings } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { Ratings, REVIEW_MIN_LENGTH, REVIEW_MAX_LENGTH } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReviewAction } from '../../store/api-action';
 import Rating from '../rating/rating';
+import { getReviewSendingStatus } from '../../store/data-process/data-selectors';
 
 type ReviewFormProps = {
   offerId: number;
@@ -11,6 +12,8 @@ type ReviewFormProps = {
 function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
   const dispatch = useAppDispatch();
+
+  const reviewSendingStatus = useAppSelector(getReviewSendingStatus);
 
   const [formData, setFormData] = useState({
     rating: '',
@@ -30,9 +33,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       comment: formData.review,
       rating: Number(formData.rating),
     }));
-
     setFormData({rating: '', review:''});
-
   };
 
   return (
@@ -55,7 +56,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={formData.rating === '' || formData.review.length < REVIEW_MIN_LENGTH || formData.review.length > REVIEW_MAX_LENGTH}>{reviewSendingStatus ? 'Sending...' : 'Submit'}</button>
       </div>
     </form>
   );
