@@ -1,24 +1,25 @@
 import Account from '../../components/account/account';
-import ListFavorites from '../../components/list-favorites/list-favorites';
 import Logo from '../../components/logo/logo';
-import { Offer } from '../../types/offers';
-import { useState } from 'react';
-import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/data-process/data-selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavorites, getFavoritesQuantity } from '../../store/data-process/data-selectors';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import Favorites from '../../components/favorites/favorites';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { fetchFavoriteOffersAction } from '../../store/api-action';
+import { useEffect } from 'react';
 
 function FavoritesPage(): JSX.Element {
 
-  const allOffers = useAppSelector(getOffers);
+  const dispatch = useAppDispatch();
 
-  const favoriteOffers = allOffers.filter((offer) => offer.isFavorite);
+  const favoriteOffers = useAppSelector(getFavorites);
 
-  const [, setSelectedOffer] = useState<Offer | undefined>(undefined);
+  const favoriteOffersQuantity = useAppSelector(getFavoritesQuantity);
 
-  const onListOfferHoverOn = (offerId: number | undefined) => {
-    const currentOffer = allOffers.find((offer) => offer.id === offerId);
-
-    setSelectedOffer(currentOffer);
-  };
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAction());
+  }, [dispatch]);
 
   return (
     <div className="page">
@@ -31,18 +32,12 @@ function FavoritesPage(): JSX.Element {
         </div>
       </header>
 
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ListFavorites offers={favoriteOffers} onListOfferHoverOn={onListOfferHoverOn}/>
-          </section>
-        </div>
-      </main>
+      {favoriteOffersQuantity === 0 ? <FavoritesEmpty /> : <Favorites offers={favoriteOffers} />}
+
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link className="footer__logo-link" to={AppRoute.Main}>
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-        </a>
+        </Link>
       </footer>
     </div>
   );

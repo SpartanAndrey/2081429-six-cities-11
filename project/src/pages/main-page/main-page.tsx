@@ -3,15 +3,18 @@ import Logo from '../../components/logo/logo';
 import ListCities from '../../components/list-cities/list-cities';
 import ListOffers from '../../components/list-offers/list-offers';
 import Sorting from '../../components/sorting/sorting';
-import { Offer } from '../../types/offers';
 import { useState } from 'react';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSortOffers } from '../../utils';
-import { getOffers } from '../../store/data-process/data-selectors';
-import { SortType } from '../../const';
+import { getCurrentOffer, getOffers } from '../../store/data-process/data-selectors';
+import { AuthorizationStatus, SortType } from '../../const';
 import { getCurrentCity } from '../../store/data-process/data-selectors';
 import { setCurrentCity } from '../../store/data-process/data-process';
+import MainEmpty from '../../components/main-empty/main-empty';
+import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
+import { fetchFavoriteOffersAction } from '../../store/api-action';
+import { useEffect } from 'react';
 
 function MainPage(): JSX.Element {
 
@@ -19,6 +22,14 @@ function MainPage(): JSX.Element {
 
   const allOffers = useAppSelector(getOffers);
   const currentCity = useAppSelector(getCurrentCity);
+  const selectedOffer = useAppSelector(getCurrentOffer);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffersAction());
+    }
+  }, [dispatch, authorizationStatus]);
 
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Default);
 
@@ -28,14 +39,6 @@ function MainPage(): JSX.Element {
 
   const selectedOffers = allOffers.filter(({ city }) => city.name === currentCity);
   const sortOffers = getSortOffers(currentSortType, selectedOffers);
-
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-
-  const onListOfferHoverOn = (offerId: number | undefined) => {
-    const currentOffer = selectedOffers.find((offer) => offer.id === offerId);
-
-    setSelectedOffer(currentOffer);
-  };
 
   const onCityClick = (city: string) => {
     dispatch(setCurrentCity(city));
@@ -62,25 +65,26 @@ function MainPage(): JSX.Element {
             />
           </section>
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{selectedOffers.length} {selectedOffers.length === 1 ? 'place' : 'places'} to stay in {currentCity}</b>
-              <Sorting currentSortType={currentSortType} onSortTypeClick={onSortTypeClick}/>
-              <div className="cities__places-list places__list tabs__content">
-                <ListOffers
-                  offers={sortOffers} onListOfferHoverOn={onListOfferHoverOn}
-                />
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map offers={selectedOffers} selectedOffer={selectedOffer} />
+        {selectedOffers.length === 0 ? <MainEmpty /> :
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{selectedOffers.length} {selectedOffers.length === 1 ? 'place' : 'places'} to stay in {currentCity}</b>
+                <Sorting currentSortType={currentSortType} onSortTypeClick={onSortTypeClick}/>
+                <div className="cities__places-list places__list tabs__content">
+                  <ListOffers
+                    offers={sortOffers}
+                  />
+                </div>
               </section>
+              <div className="cities__right-section">
+                <section className="cities__map map">
+                  <Map offers={selectedOffers} selectedOffer={selectedOffer} />
+                </section>
+              </div>
             </div>
-          </div>
-        </div>
+          </div>}
       </main>
     </div>
   );

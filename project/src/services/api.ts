@@ -3,7 +3,7 @@ import { getToken } from './token';
 import {StatusCodes} from 'http-status-codes';
 import {toast} from 'react-toastify';
 
-const StatusCodeMapping: number[] = [StatusCodes.BAD_REQUEST, StatusCodes.UNAUTHORIZED, StatusCodes.NOT_FOUND];
+const StatusCodeMapping: number[] = [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND];
 
 const BACKEND_URL = 'https://11.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;

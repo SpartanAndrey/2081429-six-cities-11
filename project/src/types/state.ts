@@ -6,16 +6,22 @@ import { UserData } from './user-data.js';
 
 export type DataProcess = {
   currentCity: string;
+  favorites: {
+    data: Offer[];
+    quantity: number;
+  };
   offers: {
     data: Offer[];
     isOffersLoading: boolean;
     selectedOffer?: Offer;
+    currentOffer?: Offer;
   };
   offersNearby: {
     data: Offer[];
   };
   reviews: {
     data: Review[];
+    sendingStatus: boolean;
   };
 }
 

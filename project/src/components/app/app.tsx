@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes} from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
@@ -19,12 +19,13 @@ import browserHistory from '../../browser-history';
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   useEffect(() => {
     dispatch(fetchAllOffersAction());
     dispatch(checkAuthAction());
-  }, [dispatch]);
+  }, [dispatch, authorizationStatus]);
 
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersLoading = useAppSelector(getOffersLoadingStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {

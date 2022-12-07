@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks';
 import { getUserData, getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { AuthorizationStatus } from '../../const';
-import SignIn from '../sign-in/sign';
+import SignIn from '../sign-in/sign-in';
 import SignOut from '../sign-out/sign-out';
 
 function Account(): JSX.Element {

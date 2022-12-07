@@ -12,8 +12,9 @@ import { getSelectedOffer, getOffersNearby, getReviews } from '../../store/data-
 import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { useEffect } from 'react';
 import { fetchSelectedOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-action';
-import { AuthorizationStatus } from '../../const';
-import NotFoundPage from '../not-found-page/not-found-page';
+import { AuthorizationStatus, MAX_PHOTOS_NUMBER } from '../../const';
+import { redirectToRoute } from '../../store/action';
+import { AppRoute } from '../../const';
 
 function PropertyPage(): JSX.Element {
 
@@ -29,15 +30,17 @@ function PropertyPage(): JSX.Element {
     dispatch(fetchSelectedOfferAction(currentId));
     dispatch(fetchOffersNearbyAction(currentId));
     dispatch(fetchReviewsAction(currentId));
-  }, [currentId, dispatch]);
+  }, [dispatch, currentId]);
 
   const offersNearby = useAppSelector(getOffersNearby);
   const selectedOffer = useAppSelector(getSelectedOffer);
   const reviewsOnOffer = useAppSelector(getReviews);
 
-  if (selectedOffer === undefined) {
-    return <NotFoundPage />;
-  }
+  useEffect(() => {
+    if (selectedOffer === undefined) {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+    }
+  });
 
   const offersOnMap = selectedOffer ? [...offersNearby, selectedOffer] : offersNearby;
 
@@ -56,7 +59,7 @@ function PropertyPage(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {selectedOffer && selectedOffer.images.map((image) => (
+              {selectedOffer && selectedOffer.images.slice(0, MAX_PHOTOS_NUMBER).map((image) => (
                 <div key ={image} className="property__image-wrapper">
                   <img className="property__image" src={image} alt="Something should be here"/>
                 </div>)
@@ -73,7 +76,7 @@ function PropertyPage(): JSX.Element {
             </section>
           </div>
           <section className="property__map map">
-            <Map offers={offersOnMap} selectedOffer={undefined} />
+            <Map offers={offersOnMap} selectedOffer={selectedOffer} />
           </section>
         </section>
         <div className="container">
@@ -81,7 +84,7 @@ function PropertyPage(): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               <ListOffers
-                offers={offersNearby} onListOfferHoverOn={() => undefined}
+                offers={offersNearby}
               />
             </div>
           </section>
@@ -92,4 +95,3 @@ function PropertyPage(): JSX.Element {
 }
 
 export default PropertyPage;
-

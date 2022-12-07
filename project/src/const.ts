@@ -11,6 +11,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Reviews ='/comments',
+  Favorites ='/favorite',
 }
 
 export enum AuthorizationStatus {
@@ -43,6 +44,14 @@ export const defaultCity = {
 };
 
 export const RATING_COEF = 20;
+
+export const REVIEW_MIN_LENGTH = 50;
+
+export const REVIEW_MAX_LENGTH = 300;
+
+export const MAX_REVIEWS_NUMBER = 10;
+
+export const MAX_PHOTOS_NUMBER = 6;
 
 export const Ratings = [
   {title: 'perfect', value: '5'},
