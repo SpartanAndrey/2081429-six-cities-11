@@ -76,7 +76,7 @@ function Card({offer}: cardProps): JSX.Element {
         </div>}
       <div className={`${getImageWrapperClass(currentPath)} place-card__image-wrapper`}>
         <Link to={selectedOfferPath}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Something should be here"/>
+          <img className="place-card__image" src={previewImage} width={260} height={200} alt="Something should be here"/>
         </Link>
       </div>
       <div className={`${currentPath === AppRoute.Favorites ? 'favorites__card-info' : ''} place-card__info`}>

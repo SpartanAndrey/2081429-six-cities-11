@@ -8,13 +8,10 @@ import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSortOffers } from '../../utils';
 import { getCurrentOffer, getOffers } from '../../store/data-process/data-selectors';
-import { AuthorizationStatus, SortType } from '../../const';
+import { SortType } from '../../const';
 import { getCurrentCity } from '../../store/data-process/data-selectors';
 import { setCurrentCity } from '../../store/data-process/data-process';
 import MainEmpty from '../../components/main-empty/main-empty';
-import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
-import { fetchFavoriteOffersAction } from '../../store/api-action';
-import { useEffect } from 'react';
 
 function MainPage(): JSX.Element {
 
@@ -23,13 +20,6 @@ function MainPage(): JSX.Element {
   const allOffers = useAppSelector(getOffers);
   const currentCity = useAppSelector(getCurrentCity);
   const selectedOffer = useAppSelector(getCurrentOffer);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(fetchFavoriteOffersAction());
-    }
-  }, [dispatch, authorizationStatus]);
 
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Default);
 

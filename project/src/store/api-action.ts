@@ -102,8 +102,12 @@ export const postReviewAction = createAsyncThunk<Review[], NewReview, {
   }>(
     'data/sendReview',
     async ({id, comment, rating}, {extra: api}) => {
-      const {data} = await api.post<Review[]>(`${APIRoute.Reviews}/${id}`, {comment, rating});
-      return data;
+      try {
+        const {data} = await api.post<Review[]>(`${APIRoute.Reviews}/${id}`, {comment, rating});
+        return data;
+      } catch(error) {
+        throw new Error('Server error');
+      }
     },
   );
 

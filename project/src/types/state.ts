@@ -13,6 +13,7 @@ export type DataProcess = {
   offers: {
     data: Offer[];
     isOffersLoading: boolean;
+    isSelectedOffersLoading: boolean;
     selectedOffer?: Offer;
     currentOffer?: Offer;
   };

@@ -33,6 +33,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       comment: formData.review,
       rating: Number(formData.rating),
     }));
+
     setFormData({rating: '', review:''});
   };
 

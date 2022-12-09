@@ -15,6 +15,8 @@ export const getReviewSendingStatus = (state: State): boolean => state[NameSpace
 
 export const getOffersLoadingStatus = (state: State): boolean => state[NameSpace.Data].offers.isOffersLoading;
 
+export const getSelectedOfferLoadingStatus = (state: State): boolean => state[NameSpace.Data].offers.isSelectedOffersLoading;
+
 export const getCurrentCity = (state: State): string => state[NameSpace.Data].currentCity;
 
 export const getFavorites = (state: State): Offer[] => state[NameSpace.Data].favorites.data;
@@ -22,4 +24,3 @@ export const getFavorites = (state: State): Offer[] => state[NameSpace.Data].fav
 export const getFavoritesQuantity = (state: State): number => state[NameSpace.Data].favorites.quantity;
 
 export const getCurrentOffer = (state: State): Offer | undefined => state[NameSpace.Data].offers.currentOffer;
-
