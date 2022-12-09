@@ -1,3 +1,4 @@
+import Logo from '../../components/logo/logo';
 import { FormEvent, useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -7,6 +8,7 @@ import { AppRoute, AuthorizationStatus, CITIES } from '../../const';
 import { redirectToRoute } from '../../store/action';
 import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { useEffect } from 'react';
+import {toast} from 'react-toastify';
 
 
 function LoginPage(): JSX.Element {
@@ -26,9 +28,21 @@ function LoginPage(): JSX.Element {
     password: '',
   });
 
+  const validatePassword = (password: string): boolean => {
+    const isPassword: boolean = (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).test(password);
+
+    if (!isPassword) {
+      toast.info('Password must contain at least one letter and number.');
+      return false;
+    }
+    return true;
+  };
+
   const onSubmit = (data: AuthData) => {
-    dispatch(loginAction(data));
-    dispatch(redirectToRoute(AppRoute.Main));
+    if (validatePassword(data.password)) {
+      dispatch(loginAction(data));
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
   };
 
   const fieldChangeHandle = (evt: ChangeEvent<HTMLInputElement | null>) => {
@@ -50,11 +64,7 @@ function LoginPage(): JSX.Element {
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
+            <Logo />
           </div>
         </div>
       </header>

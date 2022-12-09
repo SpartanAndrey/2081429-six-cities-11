@@ -13,6 +13,7 @@ const initialState: DataProcess = {
   offers: {
     data: [],
     isOffersLoading: false,
+    isSelectedOffersLoading: false,
   },
   offersNearby: {
     data: [],
@@ -55,7 +56,6 @@ export const dataProcess = createSlice({
       });
 
       state.favorites.data = state.favorites.data.filter((offer) => offer.id !== action.payload);
-
     },
   },
   extraReducers(builder) {
@@ -67,8 +67,12 @@ export const dataProcess = createSlice({
         state.offers.data = action.payload;
         state.offers.isOffersLoading = false;
       })
+      .addCase(fetchSelectedOfferAction.pending, (state) => {
+        state.offers.isSelectedOffersLoading = true;
+      })
       .addCase(fetchSelectedOfferAction.fulfilled, (state, action) => {
         state.offers.selectedOffer = action.payload;
+        state.offers.isSelectedOffersLoading = false;
       })
       .addCase(fetchOffersNearbyAction.fulfilled, (state, action) => {
         state.offersNearby.data = action.payload;
