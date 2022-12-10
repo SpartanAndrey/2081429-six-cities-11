@@ -1,6 +1,6 @@
 import { Link, useLocation, generatePath } from 'react-router-dom';
 import { Offer } from '../../types/offers';
-import { AppRoute, AuthorizationStatus, RATING_COEF } from '../../const';
+import { AppRoute, AuthorizationStatus, RATING_COEF, OFFER_IMAGE, FAVORITE_IMAGE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { redirectToRoute } from '../../store/action';
@@ -76,7 +76,7 @@ function Card({offer}: cardProps): JSX.Element {
         </div>}
       <div className={`${getImageWrapperClass(currentPath)} place-card__image-wrapper`}>
         <Link to={selectedOfferPath}>
-          <img className="place-card__image" src={previewImage} width={260} height={200} alt="Something should be here"/>
+          <img className="place-card__image" src={previewImage} width={`${currentPath === AppRoute.Favorites ? FAVORITE_IMAGE.width : OFFER_IMAGE.width}`} height={`${currentPath === AppRoute.Favorites ? FAVORITE_IMAGE.height : OFFER_IMAGE.height}`} alt="Something should be here"/>
         </Link>
       </div>
       <div className={`${currentPath === AppRoute.Favorites ? 'favorites__card-info' : ''} place-card__info`}>
