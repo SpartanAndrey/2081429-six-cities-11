@@ -23,8 +23,11 @@ function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchAllOffersAction());
-    dispatch(checkAuthAction());
   }, [dispatch, authorizationStatus]);
+
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
 
   const isOffersLoading = useAppSelector(getOffersLoadingStatus);
 

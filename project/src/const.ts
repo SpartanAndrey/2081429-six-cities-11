@@ -64,3 +64,13 @@ export const Ratings = [
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
+
+export const FAVORITE_IMAGE = {
+  width: 150,
+  height: 110,
+};
+
+export const OFFER_IMAGE = {
+  width: 260,
+  height: 200,
+};

@@ -11,10 +11,8 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ToastContainer />
+    <App />
+  </Provider>
 );
