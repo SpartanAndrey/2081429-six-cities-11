@@ -13,7 +13,7 @@ import { getSelectedOffer, getOffersNearby, getReviews, getSelectedOfferLoadingS
 import { getAuthorizationStatus } from '../../store/user-process/user-selectors';
 import { useEffect } from 'react';
 import { fetchSelectedOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-action';
-import { AuthorizationStatus, MAX_PHOTOS_NUMBER } from '../../const';
+import { AuthorizationStatus, MAX_PHOTOS_NUMBER, MAX_REVIEWS_NUMBER } from '../../const';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 function PropertyPage(): JSX.Element {
@@ -76,7 +76,7 @@ function PropertyPage(): JSX.Element {
             {selectedOffer && <PropertyFeatures offer={selectedOffer} />}
             {selectedOffer && <PropertyHost offer={selectedOffer}/>}
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsOnOffer.length}</span></h2>
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsOnOffer.length > MAX_REVIEWS_NUMBER ? MAX_REVIEWS_NUMBER : reviewsOnOffer.length}</span></h2>
               <ListReviews reviews={reviewsOnOffer} />
               {isAuthorized === AuthorizationStatus.Auth && <ReviewForm offerId={currentId}/>}
             </section>

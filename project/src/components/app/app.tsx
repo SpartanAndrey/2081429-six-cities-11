@@ -13,7 +13,7 @@ import { getAuthorizationStatus } from '../../store/user-process/user-selectors'
 import { useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
 import { fetchAllOffersAction, checkAuthAction } from '../../store/api-action';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {

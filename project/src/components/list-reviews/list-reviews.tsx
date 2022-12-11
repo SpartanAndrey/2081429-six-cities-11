@@ -9,7 +9,7 @@ type ListReviewsProps = {
 
 function ListReviews({ reviews }: ListReviewsProps): JSX.Element {
 
-  const processedReviews = reviews.slice(0, MAX_REVIEWS_NUMBER).sort(getSortReviewsByDate);
+  const processedReviews = reviews.slice(-MAX_REVIEWS_NUMBER).sort(getSortReviewsByDate);
 
   return (
     <ul className="reviews__list">
